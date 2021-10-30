@@ -117,7 +117,7 @@ public interface List<T> {
 	default T remove (T pattern) {
 		return remove(indexOf(pattern));
 	}
-	
+	 
 	/**
 	 * removes all objects from "this" list that exist in a given list
 	 * @param list
@@ -135,6 +135,11 @@ public interface List<T> {
 	 */
 	default boolean retainAll(List<T> list) {
 		return removeIf(new RemoveRetainPredicate<>(list, true));
+		
+	//please tell me, is it possible without RemoveRetainPredicate ??? 
+	// Variant 2	
+	//    
+	//    return removeIf(new RemoveAllPredicate<>(removeAll(list)));	
 	}
 
 }
