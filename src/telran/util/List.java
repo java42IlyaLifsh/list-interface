@@ -44,8 +44,7 @@ public interface List<T> {
 	 * @return true if there is at least one object equaled to a given pattern, otherwise - false
 	 */
 	default boolean contains(T pattern) {
-		//TODO
-		return false;
+		return indexOf(pattern) >= 0;
 	}
 	
 	/**
@@ -54,8 +53,7 @@ public interface List<T> {
 	 * @return index of the first occurrence of an object equaled to a given pattern, or -1 if no such object
 	 */
 	default int indexOf(T pattern) {
-		//TODO
-		return -1;
+		return indexOf(new EqualsPredicate<T>(pattern));
 	}
 	
 	/**
@@ -64,8 +62,8 @@ public interface List<T> {
 	 * @return index of the last occurrence of an object equaled to a given pattern, or -1 if no such object
 	 */
 	default int lastIndexOf(T pattern) {
-		//TODO
-		return -1;
+		return lastIndexOf(new EqualsPredicate<T>(pattern));
+
 	}
 	
 	/**
@@ -74,8 +72,8 @@ public interface List<T> {
 	 * @return true in the case the list contains ate least one object matching a condition of a given predicate, otherwise - false
 	 */
 	default boolean contains(Predicate<T> predicate) {
-		//TODO
-		return false;
+		return indexOf(predicate) >= 0;
+		
 	}
 	/**
 	 * 
@@ -102,7 +100,7 @@ public interface List<T> {
 	 * sorts array of T objects in accordance with the natural order
 	 */
 	default void sort() {
-		//TODO write default implementation based on the method sort with comparator
+		sort((Comparator<T>)Comparator.naturalOrder());
 	}
 	
 	/**
@@ -117,8 +115,7 @@ public interface List<T> {
 	 * @return reference to being removed object or null if no such object
 	 */
 	default T remove (T pattern) {
-		//TODO default implementation  based on other interface methods
-		return null;
+		return remove(indexOf(pattern));
 	}
 	
 	/**
@@ -137,8 +134,7 @@ public interface List<T> {
 	 * @return true if at least one object has been removed
 	 */
 	default boolean retainAll(List<T> list) {
-		//TODO
-		return false;
+		return removeIf(new RemoveRetainPredicate<>(list, true));
 	}
 
 }
