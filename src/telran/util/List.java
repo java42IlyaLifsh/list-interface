@@ -141,5 +141,6 @@ public interface List<T> {
 	//    
 	//    return removeIf(new RemoveAllPredicate<>(removeAll(list)));	
 	}
+	//[YG] it's possible but you should see in the doc carefully what may be done with Predicate<T>. Thta is which additional methods there are in Predicate<T>
 
 }
