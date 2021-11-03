@@ -44,7 +44,7 @@ public interface List<T> {
 	 * @return true if there is at least one object equaled to a given pattern, otherwise - false
 	 */
 	default boolean contains(T pattern) {
-		
+		//O[N] for ArrayList and LinkedList
 		return indexOf(pattern) >= 0;
 	}
 	
@@ -54,7 +54,7 @@ public interface List<T> {
 	 * @return index of the first occurrence of an object equaled to a given pattern, or -1 if no such object
 	 */
 	default int indexOf(T pattern) {
-		
+		//O[N] for ArrayList and LinkedList
 		return indexOf(new EqualsPattern<T>(pattern));
 	}
 	
@@ -64,7 +64,7 @@ public interface List<T> {
 	 * @return index of the last occurrence of an object equaled to a given pattern, or -1 if no such object
 	 */
 	default int lastIndexOf(T pattern) {
-		
+		//O[N] for ArrayList and LinkedList
 		return lastIndexOf(new EqualsPattern<T>(pattern));
 	}
 	
@@ -74,7 +74,7 @@ public interface List<T> {
 	 * @return true in the case the list contains ate least one object matching a condition of a given predicate, otherwise - false
 	 */
 	default boolean contains(Predicate<T> predicate) {
-		
+		//O[N] for ArrayList and LinkedList
 		return indexOf(predicate) >= 0;
 	}
 	/**
@@ -103,6 +103,7 @@ public interface List<T> {
 	 */
 	@SuppressWarnings("unchecked")
 	default void sort() {
+		//O[N * LogN]
 		sort((Comparator<T>)Comparator.naturalOrder());
 	}
 	
@@ -118,7 +119,7 @@ public interface List<T> {
 	 * @return reference to being removed object or null if no such object
 	 */
 	default T remove (T pattern) {
-		
+		//O[N]
 		return remove(indexOf(pattern));
 	}
 	
@@ -128,7 +129,11 @@ public interface List<T> {
 	 * @return true if at least one object has been removed
 	 */
 	default boolean removeAll(List<T> list) {
-		
+		//O[N] (need to update removeIf for ArrayList)
+		if (this == list) {
+			clear();
+			return true;
+		}
 		return removeIf(new RemoveAllPredicate<>(list));
 	}
 	
@@ -138,8 +143,24 @@ public interface List<T> {
 	 * @return true if at least one object has been removed
 	 */
 	default boolean retainAll(List<T> list) {
-		
+		//O[N] (need to update removeIf for ArrayList)
 		return removeIf(new RemoveAllPredicate<>(list).negate());
 	}
+	/**
+	 * searches for pattern in a sorted list by given comparator
+	 * @param pattern
+	 * @param comp
+	 * @return the same index as the standard binarySearch in the class Arrays
+	 */
+	int sortedSearch(T pattern, Comparator<T> comp);
+	@SuppressWarnings("unchecked")
+	default int sortedSearch(T pattern) {
+		return sortedSearch(pattern, (Comparator<T>)Comparator.naturalOrder());
+	}
+	/**
+	 * remove all elements.
+	 * after clear call size will be 0
+	 */
+	void clear();
 
 }
