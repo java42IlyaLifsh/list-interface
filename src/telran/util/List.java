@@ -1,5 +1,5 @@
 package telran.util;
-
+//HW_10 IlyaL
 import java.util.Comparator;
 import java.util.function.Predicate;
 
