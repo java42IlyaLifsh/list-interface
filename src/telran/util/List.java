@@ -3,6 +3,7 @@ package telran.util;
 
 import java.util.Comparator;
 import java.util.function.Predicate;
+//V.R. Looks very good. I don't see any problem.
 
 public interface List<T> extends Iterable<T> {
 /**
